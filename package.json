@@ -6,7 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name kapok-ui --dest lib ./packages/index.js"
+    "lib": "vue-cli-service build --target lib --name kapok-ui --dest lib ./packages/index.js",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "main": "lib/kapok-ui.common.js",
   "files": [
@@ -30,7 +32,8 @@
     "babel-plugin-component": "^1.1.1",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vuepress": "^1.9.7"
   },
   "eslintConfig": {
     "root": true,
