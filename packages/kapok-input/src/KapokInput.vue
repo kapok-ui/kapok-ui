@@ -17,10 +17,10 @@
 
 <script>
 export default {
-  name: 'NoBorderInput',
+  name: 'KapokInput',
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: ''
     },
     prop: {

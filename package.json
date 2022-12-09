@@ -1,14 +1,12 @@
 {
   "name": "kapok-ui",
-  "version": "1.2.0",
+  "version": "1.8.2",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name kapok-ui --dest lib ./packages/index.js",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "lib": "vue-cli-service build --target lib --name kapok-ui --dest lib ./packages/index.js"
   },
   "main": "lib/kapok-ui.common.js",
   "files": [
@@ -33,7 +31,8 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "vue-template-compiler": "^2.6.11",
-    "vuepress": "^1.9.7"
+    "sass": "1.26.2",
+    "sass-loader": "8.0.2"
   },
   "eslintConfig": {
     "root": true,

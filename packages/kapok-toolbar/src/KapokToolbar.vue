@@ -49,8 +49,15 @@
                 </div>
               </el-option>
             </el-select>
+            <slot name="customFilter" />
           </div>
-          <el-button slot="reference" icon="el-icon-s-operation" size="mini">筛选</el-button>
+          <el-button
+            slot="reference"
+            icon="el-icon-s-operation"
+            size="mini"
+          >
+            筛选
+          </el-button>
         </el-popover>
       </el-button-group>
       <el-input
@@ -62,6 +69,7 @@
         style="width: 200px;"
         @input="onSearch"
       />
+      <slot name="end" />
       <span
         v-for="(filter, key) in filters"
         :key="key"
@@ -153,7 +161,7 @@ export default {
       this.$nextTick(() => {
         this.$refs.scrollbar.update()
       })
-      this.$emit('on-filter', this.getFilters())
+      this.$emit('on-filter', this.getFilters(), this.filters)
     },
     getFilters() {
       const result = {}
@@ -169,12 +177,30 @@ export default {
     onSearch() {
       this.$emit('on-search', this.searchKey)
     },
+    setFilters(filters) {
+      if (filters instanceof Object) {
+        this.filters = {
+          ...this.filters,
+          ...filters
+        }
+        this.onFilter()
+      }
+    },
     cancelFilter(filter, key) {
       this.$nextTick(() => {
         this.$refs.scrollbar.update()
       })
       this.filters[key] = null
-      this.$emit('on-filter', this.getFilters())
+      this.$emit('on-filter', this.getFilters(), this.filters)
+    },
+    getFiltersTitle() {
+      let filterTitle = ''
+      Object.keys(this.filters).forEach((key, index) => {
+        if (this.filters[key]) {
+          filterTitle === '' ? filterTitle = this.filters[key].text : filterTitle = filterTitle + '-' + this.filters[key].text
+        }
+      })
+      return filterTitle
     }
   }
 }

@@ -8,7 +8,12 @@ import KapokSelect from './kapok-select'
 import kapokTable from './kapok-table'
 import kapokTag from './kapok-tag'
 import kapokToolbar from './kapok-toolbar'
-import kapokUserCard from './kapok-user-card'
+import kapokProfileCard from './kapok-profile-card'
+import KapokAvatar from './kapok-avatar'
+import kapokHeader from './kapok-header'
+import KapokAppCard from './kapok-app-card'
+import KapokAppsBar from './kapok-apps-bar'
+import KapokIcon from './kapok-icon'
 const components = [
   KapokDocsButton,
   KapokDocsDrawer,
@@ -20,7 +25,12 @@ const components = [
   kapokTable,
   kapokTag,
   kapokToolbar,
-  kapokUserCard
+  kapokProfileCard,
+  KapokAvatar,
+  kapokHeader,
+  KapokAppCard,
+  KapokAppsBar,
+  KapokIcon
 ]
 
 const install = function(Vue) {
@@ -45,5 +55,10 @@ export default {
   kapokTable,
   kapokTag,
   kapokToolbar,
-  kapokUserCard
+  kapokProfileCard,
+  KapokAvatar,
+  kapokHeader,
+  KapokAppCard,
+  KapokAppsBar,
+  KapokIcon
 }

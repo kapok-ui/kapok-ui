@@ -10,21 +10,28 @@
         shadow="hover"
         :body-style="{padding: '0'}"
       >
-        <kapok-option
-          :item="item"
-          :column-mask="columnMask"
-          :column-mask-config="columnMaskConfig"
-          :avatar="avatar"
-          :avatar-prop="avatarProp"
-          :title-prop="titleProp"
-          :more-button="moreButton"
-          :more-button-props="moreButtonProps"
-          :tags="tags"
-          :tag-props="tagProps"
-          :ellipsis-items="ellipsisItems"
-          :ellipsis-item-props="ellipsisItemProps"
-          :option-click-handler="optionClickHandler"
-        />
+        <slot :row="item">
+          <kapok-option
+            :item="item"
+            :column-mask="columnMask"
+            :column-mask-config="columnMaskConfig"
+            :avatar="avatar"
+            :avatar-prop="avatarProp"
+            :title-prop="titleProp"
+            :sex-prop="sexProp"
+            :more-button="moreButton"
+            :more-button-props="moreButtonProps"
+            :tags="tags"
+            :tag-props="tagProps"
+            :ellipsis-items="ellipsisItems"
+            :ellipsis-item-props="ellipsisItemProps"
+            :option-click-handler="optionClickHandler"
+            :upload="upload"
+            :upload-config="uploadConfig"
+            :upload-handler="uploadHandler"
+            :preview="preview"
+          />
+        </slot>
       </el-card>
     </div>
   </el-scrollbar>
@@ -34,8 +41,10 @@
 </template>
 
 <script>
+import KapokOption from '../../kapok-option'
 export default {
   name: 'KapokGrid',
+  components: { KapokOption },
   props: {
     height: {
       type: Number,
@@ -59,6 +68,10 @@ export default {
       type: String,
       default: 'title'
     },
+    sexProp: {
+      type: String,
+      default: null
+    },
     moreButton: {
       type: Boolean,
       default: false
@@ -81,7 +94,7 @@ export default {
     },
     ellipsisItems: {
       type: Boolean,
-      default: true
+      default: false
     },
     ellipsisItemProps: {
       type: Array,
@@ -113,6 +126,32 @@ export default {
     optionClickHandler: {
       type: Function,
       default: function(data) {}
+    },
+    preview: {
+      type: Boolean,
+      default: false
+    },
+    upload: {
+      type: Boolean,
+      default: false
+    },
+    uploadConfig: {
+      type: Object,
+      default: function() {
+        return {
+          action: '', // 上传的地址
+          headers: {}, // 请求头
+          data: {}, // 附件参数
+          name: 'file', // 上传的文件字段名
+          accept: '', // 接受上传的文件类型
+          icon: 'el-icon-fresh', // 上传遮罩层图标
+          title: '更换头像' // 上传遮罩层标题
+        }
+      }
+    },
+    uploadHandler: {
+      type: Function,
+      default: function() {}
     }
   },
   data() {

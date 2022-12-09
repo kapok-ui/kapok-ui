@@ -1,5 +1,5 @@
 <template>
-  <div class="kapok-select">
+  <div :class="divClass">
     <el-select
       ref="select"
       :value="value"
@@ -10,38 +10,61 @@
       :placeholder="placeholder"
       :remote-method="remoteMethod"
       :loading="loading"
-      :value-key="valueKey"
-      @mouseover.native="divClass = null"
+      :value-key="optionConfig.valueKey"
+      :size="size"
+      @mouseover.native="mouseOver"
       @mouseleave.native="mouseLeave"
       @input="change($event)"
       @focus="onFocus"
+      @clear="clear"
     >
-      <template v-if="valueConfig.loading" slot="prefix">
-        <i class="el-icon-loading" />
-      </template>
-      <slot name="default">
-        <el-option
-          v-for="option in options"
-          :key="option.value"
-          :label="option.text"
-          :value="option.value"
+      <template slot="prefix">
+        <i
+          v-if="prefixLoading && valueConfig.loading"
+          class="el-icon-loading"
+          :style="{lineHeight: size === 'mini' ? '28px' : size === 'small' ? '32px' : '36px' }"
         />
-      </slot>
+        <slot v-else name="prefix" />
+      </template>
+      <el-option
+        v-for="(option,i) in options"
+        :key="i"
+        :label="option[optionConfig.labelKey ? optionConfig.labelKey : 'text']"
+        :value="selectOption ? option : option[optionConfig.valueKey ? optionConfig.valueKey : 'value']"
+        :style="optionConfig.avatar || optionConfig.tags ? { height: '68px'} : null"
+      >
+        <kapok-option
+          v-if="optionConfig.avatar || optionConfig.tags"
+          :item="option"
+          :avatar="optionConfig.avatar === true"
+          :avatar-prop="optionConfig.avatarProp ? optionConfig.avatarProp : 'avatar'"
+          :title-prop="optionConfig.labelKey ? optionConfig.labelKey : 'text'"
+          :sex-prop="optionConfig.sexProp"
+          :tags="optionConfig.tags === true"
+          :tag-props="optionConfig.tagProps ? optionConfig.tagProps : []"
+          :ellipsis-items="false"
+          :preview="false"
+          style="line-height: 20px"
+        />
+      </el-option>
     </el-select>
   </div>
 </template>
 
 <script>
+import kapokOption from '../../kapok-option/src/KapokOption'
 export default {
-  name: 'NoBorderSelect',
+  name: 'KapokSelect',
+  components: { kapokOption },
   props: {
-    valueKey: {
-      type: String,
+    value: {
+      type: [String, Number, Array, Object],
       default: null
     },
-    value: {
-      type: [String, Number, Array],
-      default: null
+    // 某些场景下可能会需要
+    prop: {
+      type: String,
+      default: ''
     },
     options: {
       type: Array,
@@ -49,13 +72,40 @@ export default {
         return []
       }
     },
+    optionConfig: {
+      type: Object,
+      default: function() {
+        return {
+          labelKey: 'text',
+          valueKey: 'value',
+          avatar: false,
+          avatarProp: 'avatar',
+          sexProp: null,
+          tags: false,
+          tagProps: []
+        }
+      }
+    },
+    // 是否选择整个option作为value
+    selectOption: {
+      type: Boolean,
+      default: false
+    },
+    size: {
+      type: String,
+      default: 'medium'
+    },
+    border: {
+      type: String,
+      default: 'always'
+    },
     readonly: {
       type: Boolean,
       default: false
     },
-    autoLoading: {
+    prefixLoading: {
       type: Boolean,
-      default: true
+      default: false
     },
     filterable: {
       type: Boolean,
@@ -88,17 +138,37 @@ export default {
   },
   data() {
     return {
-      divClass: 'kapok-select',
       valueConfig: {
         prop: '',
         value: '',
         loading: false
+      },
+      hover: true
+    }
+  },
+  computed: {
+    divClass() {
+      if (this.readonly) {
+        if (this.border === 'hover' && this.hover) {
+          return 'kapok-select-hover-readonly'
+        } else {
+          return ''
+        }
+      } else {
+        if (this.border === 'hover' && this.hover) {
+          return 'kapok-select-hover'
+        } else {
+          return ''
+        }
       }
     }
   },
   methods: {
+    mouseOver() {
+      this.hover = false
+    },
     mouseLeave() {
-      this.divClass = 'kapok-select'
+      this.hover = true
     },
     onFocus() {
       if (this.readonly) {
@@ -107,22 +177,28 @@ export default {
     },
     change: function(val) {
       this.$emit('input', val)
-      if (this.autoLoading) {
+      if (this.prefixLoading) {
         this.valueConfig.loading = true
       }
       this.valueConfig.value = val
-      this.valueConfig.prop = this.valueKey
-      this.$emit('confirm', this.valueConfig)
+      this.valueConfig.prop = this.prop
+      this.$emit('change', this.valueConfig)
+    },
+    clear() {
+      this.$emit('clear', this.valueConfig)
     }
   }
 }
 </script>
 
 <style scoped>
-.kapok-select >>> .el-input__inner {
+.kapok-select-hover >>> .el-input__inner {
   border: 1px solid #fff;
 }
-.el-icon-loading {
-  line-height: 32px;
+.kapok-select-hover-readonly >>> .el-input__inner {
+  border: 1px solid #fff;
+}
+.kapok-select-hover-readonly >>> .el-select .el-input .el-select__caret.el-icon-arrow-up::before {
+  visibility: hidden;
 }
 </style>

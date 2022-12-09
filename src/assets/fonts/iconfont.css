@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3482916 */
+  /* Color fonts */
+  src: 
+       url('iconfont.woff2?t=1656041832329') format('woff2'),
+       url('iconfont.woff?t=1656041832329') format('woff'),
+       url('iconfont.ttf?t=1656041832329') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.kapok-icon-book:before {
+  content: "\e6ba";
+}
+

@@ -1,0 +1,16 @@
+{
+  "id": "3482916",
+  "name": "kapok-ui",
+  "font_family": "iconfont",
+  "css_prefix_text": "kapok-icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "28829361",
+      "name": "book",
+      "font_class": "book",
+      "unicode": "e6ba",
+      "unicode_decimal": 59066
+    }
+  ]
+}

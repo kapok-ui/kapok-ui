@@ -4,6 +4,7 @@
     :size="size"
     :effect="effect"
     :closable="closable"
+    :type="type"
   >
     <div :title="title" class="kapok-omit-display">
       {{ title }}
