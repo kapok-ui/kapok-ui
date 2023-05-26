@@ -54,7 +54,9 @@
       style="margin-top: 100px;"
     />
     <kapok-header style="margin-top: 10px;" />
-    <kapok-app-card style="width: 150px" title="上下班签到上下班签到" />
+    <kapok-app-card style="width: 150px" title="上下班签到上下班签到">
+      <span>123</span>
+    </kapok-app-card>
     <kapok-apps-bar :apps="apps" style="margin-top: 10px;" />
   </div>
 </template>
@@ -78,7 +80,7 @@ export default {
       },
       selectValue: 'test',
       apps: [
-        { title: '测试', icon: 'iconfont kapok-icon-book' },
+        { title: '测试', icon: 'https://www.ouya.guolianrobot.com/Noface.jpg' },
         { title: '测试2', icon: 'iconfont kapok-icon-book' }
       ],
       filterOptions: [

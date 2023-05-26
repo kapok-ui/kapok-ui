@@ -17,6 +17,7 @@
     @selection-change="handleSelectionChange"
     @row-click="rowClick"
     @sort-change="sortChange"
+    @header-dragend="headerDragend"
   >
     <el-table-column
       v-if="hasSelection"
@@ -157,6 +158,10 @@ export default {
     },
     sortChange(data) {
       this.$emit('sort-change', data)
+    },
+    headerDragend(newWidth, oldWidth, column, event) {
+      this.$refs.table.doLayout()
+      this.$emit('header-dragend', newWidth, oldWidth, column, event)
     }
   }
 }

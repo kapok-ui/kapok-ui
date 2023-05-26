@@ -5,8 +5,11 @@
     :title="title"
   >
     <div class="kapok-app-card-container">
-      <span :class="icon" :style="iconStyle" />
-      <span class="kapok-app-card-title">{{ title }}</span>
+      <slot name="default">
+        <el-image v-if="icon.startsWith('http') || icon.startsWith('//')" :src="icon" style="width: 25px;height: 25px;" />
+        <span v-else :class="icon" :style="iconStyle" />
+        <span class="kapok-app-card-title">{{ title }}</span>
+      </slot>
     </div>
   </el-card>
 </template>
