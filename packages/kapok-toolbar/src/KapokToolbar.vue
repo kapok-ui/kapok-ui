@@ -18,6 +18,7 @@
               :key="i"
               v-model="filters[filterOption.filterKey]"
               :placeholder="filterOption.placeholder"
+              :multiple="isMultiple"
               size="mini"
               value-key="value"
               clearable
@@ -133,6 +134,10 @@ export default {
       default: function() {
         return []
       }
+    },
+    isMultiple: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
